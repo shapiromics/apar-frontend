@@ -8,13 +8,15 @@ pipeline {
             }
         }
         stage("Build image") {
+            agent {
+                label "dockerPod"
+            }
             steps {
-                container("docker") {
-                    sh"""
-                        docker build -t apar-frontend:$BUILD_ID
-                    """
+                script {
+                    myapp = docker.build("DOCKER-HUB-USERNAME/hello:${env.BUILD_ID}")
                 }
             }
         }
     }
+
 }
