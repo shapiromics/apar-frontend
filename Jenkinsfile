@@ -8,9 +8,6 @@ pipeline {
             }
         }
         stage("Build image") {
-            agent {
-                label "dockerPod"
-            }
             steps {
                 script {
                     myapp = docker.build("DOCKER-HUB-USERNAME/hello:${env.BUILD_ID}")
