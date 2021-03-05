@@ -9,8 +9,10 @@ pipeline {
         }
         stage("Build image") {
             steps {
-                script {
-                    myapp = docker.build("simojoe/apar-frontend:${env.BUILD_ID}")
+                container("docker") {
+                    sh"""
+                        docker build -t apar-frontend:$BUILD_ID
+                    """
                 }
             }
         }
