@@ -9,8 +9,8 @@ pipeline {
         }
         stage("Build image") {
             steps {
-                script {
-                    myapp = docker.build("DOCKER-HUB-USERNAME/hello:${env.BUILD_ID}")
+                container ("docker") {
+                    sh "docker build -t apar-frontend:${env.BUILD_ID}"
                 }
             }
         }
