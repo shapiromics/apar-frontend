@@ -14,28 +14,28 @@ pipeline {
             serviceAccountName: cd-jenkins
             containers:
             - name: maven
-                image: maven:latest
-                command:
-                - cat
-                tty: true
-                volumeMounts:
-                - mountPath: "/root/.m2"
-                    name: m2
+              image: maven:latest
+              command:
+              - cat
+              tty: true
+              volumeMounts:
+              - mountPath: "/root/.m2"
+                name: m2
             - name: docker
-                image: docker:latest
-                command:
-                - cat
-                tty: true
-                volumeMounts:
-                - mountPath: /var/run/docker.sock
+              image: docker:latest
+              command:
+              - cat
+              tty: true
+              volumeMounts:
+              - mountPath: /var/run/docker.sock
                 name: docker-sock
             volumes:
-                - name: docker-sock
-                hostPath:
-                    path: /var/run/docker.sock
-                - name: m2
+              - name: docker-sock
+              hostPath:
+              path: /var/run/docker.sock
+              - name: m2
                 persistentVolumeClaim:
-                    claimName: m2
+                claimName: m2
             """
         }
     }
