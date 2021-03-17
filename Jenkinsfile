@@ -5,7 +5,9 @@ pipeline {
         stage("Build image") {
             steps {
                 container ("docker") {
-                    app = sh "docker build -t simojoe/apar-frontend:${env.BUILD_ID} ."
+                    script {
+                        app = docker.build("simojoe/apar-frontend:${env.BUILD_ID}")
+                    }
                 }
             }
         }
