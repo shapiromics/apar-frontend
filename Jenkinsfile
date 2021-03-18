@@ -23,11 +23,12 @@ pipeline {
                 }
             }
         }
-        stage("Deploy image")
+        stage("Deploy image") {
             steps {
                 sh("ls")
                 sh("kubectl get nodes")
             }
+        }
     }
 
 }
