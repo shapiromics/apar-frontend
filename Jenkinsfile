@@ -27,9 +27,8 @@ pipeline {
         stage("Deploy image") {
             steps {
                 container("kube") {
-                    steps {
-                        sh("kubectl create namespace test")
-                    }
+                    echo "dude"
+                    sh "kubectl create namespace test"
                 }
             }
         }
