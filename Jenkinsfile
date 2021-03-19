@@ -26,7 +26,6 @@ pipeline {
 
         stage("Deploy image") {
             steps {
-                System.setProperty("org.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS", "true");
                 container("kube") {
                     echo "dude"
                     sh "kubectl create namespace test"
