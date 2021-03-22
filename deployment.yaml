@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodejs-service
+  name: apar-frontend-service
   labels:
     app: apar-frontend
 spec:
