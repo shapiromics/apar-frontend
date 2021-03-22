@@ -27,7 +27,7 @@ pipeline {
         stage("Deploy image") {
             steps {
                 container("kube") {
-                    sh "kubectl create namespace test"
+                    sh "kubectl apply -f deployment.yaml"
                 }
             }
         }
