@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: apar-frontend-deployment  
+  labels:    
+    app: apar-frontend
+spec:  
+  replicas: 1  
+  selector:    
+    matchLabels:
+      app: apar-frontend
+  template:
+    metadata:
+      labels:
+        app: apar-frontend
+    spec: 
+     containers:
+      - name: apar-frontend
+        image: simojoe/apar-frontend
+        ports:
+        - containerPort: 8000        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-service
+  labels:
+    app: apar-frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+    nodePort: 32121
+  selector:
+    app: apar-frontend
