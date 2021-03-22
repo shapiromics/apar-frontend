@@ -27,8 +27,10 @@ pipeline {
         stage("Deploy image") {
             steps {
                 container("kube") {
-                    echo "dude"
-                    sh "kubectl create namespace test"
+                    withKubeConfig([credentialsId: 'jenkins-serviceaccount', serverUrl: 'https://lb-apar.dev.io:8383']) {
+                        echo "dude"
+                        sh "kubectl create namespace test"
+                    }
                 }
             }
         }
