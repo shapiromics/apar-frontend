@@ -29,6 +29,7 @@ pipeline {
                 container("kube") {
                     withKubeConfig([credentialsId: 'jenkins-serviceaccount', serverUrl: 'https://lb-apar.dev.io:8383']) {
                         echo "dude"
+                        sh "echo 23"
                         sh "kubectl create namespace test"
                     }
                 }
