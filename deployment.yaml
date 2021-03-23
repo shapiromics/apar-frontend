@@ -43,6 +43,8 @@ kind: Ingress
 metadata:
   name: apar-frontend-ingress
   namespace: apar
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
   - http:
