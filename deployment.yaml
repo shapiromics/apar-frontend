@@ -47,7 +47,8 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - http:
+  - host: myhost.test
+    http:
       paths:
         - path: /
           backend:
