@@ -38,7 +38,7 @@ spec:
   selector:
     app: apar-frontend
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: apar-frontend-ingress
@@ -47,10 +47,12 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - host: myhost.test
+  - host: apar.io
     http:
       paths:
         - path: /
+          pathType: Prefix
           backend:
-            serviceName: apar-frontend
-            servicePort: 8000
+            service:
+              name: apar-frontend
+              port: 8000
