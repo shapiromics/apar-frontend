@@ -57,3 +57,10 @@ spec:
               name: apar-frontend-service
               port: 
                 number: 8000
+        - path: /singin
+          pathType: Prefix
+          backend:
+            service:
+              name: apar-frontend-service
+              port: 
+                number: 8000

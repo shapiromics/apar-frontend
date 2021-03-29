@@ -63,7 +63,7 @@ export default {
         style="cursor: pointer"
         @click="$router.push('/', () => {})"
       >
-        APAR
+        APAR - is updated
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/tool1">Tool1</v-btn>
