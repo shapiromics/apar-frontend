@@ -23,14 +23,5 @@ pipeline {
                 }
             }
         }
-
-        stage("Deploy image") {
-            steps {
-                container("kube") {
-                    sh "kubectl apply -f deployment.yaml"
-                }
-            }
-        }
     }
-
 }
