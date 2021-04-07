@@ -6,7 +6,7 @@ import errorLink from "@/plugins/vue-apollo-errorLink.js"
 
 
 const httpLink = new HttpLink({
-    uri: "http://api.apar.io/graphql/",
+    uri: "https://api.apar.live/graphql/",
     credentials: "include",
 })
 
