@@ -63,14 +63,12 @@ export default {
         style="cursor: pointer"
         @click="$router.push('/', () => {})"
       >
-        APAR - is updated
+        APAR
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/tool1">Tool1</v-btn>
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/tool2">Tool2</v-btn>
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/splitstrains">Split Strains</v-btn>
-      <!-- <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/fileupload">File Upload</v-btn> -->
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/jobhistory">
+      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/bacgwasim">BacGWASim</v-btn>
+      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/splitstrains">Split Strains</v-btn>
+      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/history">
         Job History
       </v-btn>
       <v-btn text class="mx-2" to="/about">About</v-btn>

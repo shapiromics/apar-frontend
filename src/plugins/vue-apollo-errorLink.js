@@ -9,7 +9,7 @@ const { setToken, refreshTokenMutation } = useAuth();
 
 const renewTokenClient = new ApolloClient({
   link: createHttpLink({
-    uri: "https://api.apar.live/graphql/",
+    uri: process.env.VUE_APP_GRAPHQL_URL,
     credentials: "include",
   }),
   cache: cache,
