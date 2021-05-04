@@ -51,7 +51,7 @@ export default {
     }
 
     // userJobHistory query
-    const { loading, result } = useQuery(
+    const { loading, result, refetch } = useQuery(
       gql`
         query($status: String!) {
           bacgwasimJobs(status: $status) {
@@ -90,10 +90,8 @@ export default {
 
     // Function download results
     function getDownload(job) {
-      console.log("Here!");
-      console.log(job.results.id);
       httpClient
-        .get("/download/stuff.zip", { responseType: "blob" })
+        .get("/download/" + job.results.id + ".zip", { responseType: "blob" })
         .then(({ data }) => {
           const downloadUrl = window.URL.createObjectURL(new Blob([data]));
           const link = document.createElement("a");
@@ -109,6 +107,7 @@ export default {
     watch(
       () => state.openedPanel,
       (newValue) => {
+        refetch()
         if (newValue != null) {
           form.submitSuccessMessage = "";
         }
