@@ -5,6 +5,8 @@ metadata:
   namespace: apar
 data:
   VUE_APP_GRAPHQL_URL: "https://api.apar.live/graphql/"
+  VUE_APP_DJANGO_URL: "https://api.apar.live/"
+  NODE_ENV: production
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,7 +25,7 @@ spec:
       labels:
         app: apar-frontend
     spec: 
-     containers:
+      containers:
       - name: apar-frontend
         image: simojoe/apar-frontend:latest
         envFrom:

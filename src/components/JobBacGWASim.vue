@@ -1,6 +1,7 @@
 <script>
+import httpClient from "@/plugins/axios.js";
 import { reactive, watch } from "@vue/composition-api";
-import { useMutation } from "@vue/apollo-composable";
+import { useMutation, useResult, useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 
 export default {
@@ -12,7 +13,7 @@ export default {
 
     const form = reactive({
       submitSuccessMessage: "",
-    })
+    });
 
     // BacGWASim jobCreate mutation
     const submitBacGWASimJobMutation = gql`
@@ -49,6 +50,61 @@ export default {
       mutationSubmitBacGWASimJob();
     }
 
+    // userJobHistory query
+    const { loading, result } = useQuery(
+      gql`
+        query($status: String!) {
+          bacgwasimJobs(status: $status) {
+            edges {
+              node {
+                id
+                task
+                status
+                created
+                label
+                results {
+                  id
+                }
+                user {
+                  username
+                }
+              }
+            }
+          }
+        }
+      `,
+      {
+        status: "completed",
+      }
+    );
+    state.userJobs = useResult(result, [], (data) => data.bacgwasimJobs.edges);
+
+    // Results table
+    const headers = [
+      { text: "Label", value: "label" },
+      { text: "Download", value: "download", align: "center", sortable: false },
+      { text: "Created", value: "createdOn" },
+      { text: "jobID", value: "id" },
+      { text: "Delete", value: "actions", align: "center", sortable: false },
+    ];
+
+    // Function download results
+    function getDownload(job) {
+      console.log("Here!");
+      console.log(job.results.id);
+      httpClient
+        .get("/download/stuff.zip", { responseType: "blob" })
+        .then(({ data }) => {
+          const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+          const link = document.createElement("a");
+          link.href = downloadUrl;
+          link.setAttribute("download", "file.zip");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        });
+    }
+
     // Reacting to panels changes
     watch(
       () => state.openedPanel,
@@ -63,6 +119,9 @@ export default {
       state,
       form,
       submitNewJob,
+      headers,
+      loading,
+      getDownload,
     };
   },
 };
@@ -74,9 +133,7 @@ export default {
       <v-col lg="6" offset-lg="3" md="8" offset-md="2">
         <v-card class="pa-4 my-4">
           <v-card-title>BacGWASim</v-card-title>
-          <v-card-subtitle>
-            simulates.
-          </v-card-subtitle>
+          <v-card-subtitle> simulates. </v-card-subtitle>
 
           <v-expansion-panels inset v-model="state.openedPanel">
             <v-expansion-panel align="left">
@@ -102,6 +159,21 @@ export default {
               <v-expansion-panel-header class="text-button">
                 Consult results
               </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-data-table
+                  :headers="headers"
+                  :items="state.userJobs.value.map((v) => v.node)"
+                  :loading="loading"
+                  class="elevation-1"
+                >
+                  <template v-slot:[`item.createdOn`]="{ item }">
+                    <span>{{ new Date(item.created).toLocaleString() }}</span>
+                  </template>
+                  <template v-slot:[`item.download`]="{ item }">
+                    <v-icon @click="getDownload(item)"> mdi-download </v-icon>
+                  </template>
+                </v-data-table>
+              </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
