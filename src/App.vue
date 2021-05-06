@@ -1,27 +1,20 @@
 <script>
 import { reactive } from "@vue/composition-api";
 import { useMutation, useQuery } from "@vue/apollo-composable";
-import gql from "graphql-tag";
 
 import useAuth from "@/modules/auth.js";
 import { writeCache } from "@/modules/apollo-utils.js";
 
 export default {
   setup(props, context) {
-    const { token, setToken, revokeTokenMutation } = useAuth();
+    const { token, setToken, isLoggedInQuery, revokeTokenMutation } = useAuth();
 
     const state = reactive({
       isLoggedIn: false,
     });
 
     // Query login status
-    const { onResult } = useQuery(
-      gql`
-        query {
-          isLoggedIn @client
-        }
-      `
-    );
+    const { onResult } = useQuery(isLoggedInQuery);
     onResult((queryResult) => {
       state.isLoggedIn = queryResult.data.isLoggedIn;
     });
@@ -66,8 +59,12 @@ export default {
         APAR
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/bacgwasim">BacGWASim</v-btn>
-      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/splitstrains">Split Strains</v-btn>
+      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/bacgwasim">
+        BacGWASim
+      </v-btn>
+      <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/splitstrains">
+        Split Strains
+      </v-btn>
       <v-btn v-if="state.isLoggedIn" text class="mx-2" to="/job/history">
         Job History
       </v-btn>

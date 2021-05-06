@@ -1,5 +1,11 @@
 import { InMemoryCache } from "@apollo/client";
+import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
-export default cache
+persistCache({
+  cache,
+  storage: new LocalStorageWrapper(window.localStorage),
+});
+
+export default cache;

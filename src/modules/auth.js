@@ -1,11 +1,15 @@
 import { reactive, toRefs } from "@vue/composition-api";
 import gql from "graphql-tag";
 
-const state = reactive({
-  token: null,
-});
+import apolloClient from "@/plugins/vue-apollo-client.js";
+import { writeCache } from "@/modules/apollo-utils.js";
 
 export default function useAuth() {
+
+  const state = reactive({
+    token: null,
+  });
+
   function setToken(token) {
     state.token = token;
   }
@@ -17,6 +21,18 @@ export default function useAuth() {
       }
     }
   `;
+
+  const refreshTokenUpdate = async(cache, {data}) => {
+    setToken(data.refreshToken.token);
+    await writeCache(cache, "isLoggedIn", true);
+  }
+
+  const refreshToken = async() => {
+    await apolloClient.mutate({
+      mutation: refreshTokenMutation,
+      update: refreshTokenUpdate,
+    })
+  }
 
   const revokeTokenMutation = gql`
     mutation revokeToken {
@@ -53,10 +69,29 @@ export default function useAuth() {
     }
   `;
 
+  const isLoggedInQuery = gql`
+    query {
+      isLoggedIn @client
+    }
+  `;
+
+  const isLoggedIn = async () => {
+    const {
+      data: { isLoggedIn },
+    } = await apolloClient.query({
+      query: isLoggedInQuery,
+    });
+
+    return isLoggedIn;
+  };
+
   return {
     ...toRefs(state),
     setToken,
+    isLoggedInQuery,
+    isLoggedIn,
     refreshTokenMutation,
+    refreshToken,
     revokeTokenMutation,
     userLoginMutation,
     userCreateMutation,

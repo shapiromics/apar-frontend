@@ -8,7 +8,6 @@ import { writeCache } from "@/modules/apollo-utils.js";
 export default {
   setup(props, context) {
     const state = reactive({
-      errMessage: "",
       passwordVisible: false,
       repasswordVisible: false,
       signingIn: true,
@@ -40,7 +39,12 @@ export default {
     function switchMode() {
       state.signingIn = !state.signingIn;
       state.submitLabel = state.signingIn ? "Login" : "Register";
-      state.errMessage = null;
+      // Clearing the form
+      form.username = "";
+      form.password = "";
+      form.repassword = "";
+      form.errMessage = "";
+      form.successMessage = "";
     }
 
     // userLogin mutation
@@ -89,8 +93,8 @@ export default {
         {
           update: (cache, { data }) => {
             if (data.userCreate.success) {
-              switchMode();
-              form.successMessage = "User created";
+              form.successMessage = "User created; Signing you in.";
+              setTimeout(mutateUserLogin, 2000);
             } else {
               console.log(data.userCreate.errors);
               // Handling errors
