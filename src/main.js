@@ -8,6 +8,9 @@ Vue.use(VueCompositionAPI);
 import router from "@/plugins/vue-router.js";
 import vuetify from "@/plugins/vuetify.js";
 
+// Components
+import "@/components";
+
 // Apollo Client
 import apolloClient from "@/plugins/vue-apollo-client.js";
 import { DefaultApolloClient } from "@vue/apollo-composable";
