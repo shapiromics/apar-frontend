@@ -2,7 +2,7 @@ import { ApolloClient, createHttpLink, fromPromise } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
 import cache from "@/plugins/vue-apollo-cache.js";
-import useAuth from "@/modules/auth.js";
+import { useAuth } from "@/modules/auth.js";
 import { writeCache } from "@/modules/apollo-utils.js";
 
 const { setToken, refreshTokenMutation } = useAuth();

@@ -168,7 +168,7 @@ export default {
       <v-col lg="10" offset-lg="1" xl="8" offset-xl="2">
         <v-card class="pa-4 my-4">
           <v-card-title>BacGWASim</v-card-title>
-          <v-card-subtitle> simulates. </v-card-subtitle>
+          <v-card-subtitle> A simulator for bacterial machine learning and genome-wide association studies. </v-card-subtitle>
 
           <v-expansion-panels v-model="state.openedPanel">
             <v-expansion-panel align="left" focusable>

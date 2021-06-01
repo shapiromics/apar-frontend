@@ -1,6 +1,6 @@
 import { ApolloLink } from "@apollo/client";
 
-import useAuth from "@/modules/auth.js";
+import { useAuth } from "@/modules/auth.js";
 const { token } = useAuth();
 
 const authLink = new ApolloLink((operation, forward) => {

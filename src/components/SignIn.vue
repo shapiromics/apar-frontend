@@ -2,7 +2,7 @@
 import { reactive, ref } from "@vue/composition-api";
 import { useMutation } from "@vue/apollo-composable";
 
-import useAuth from "@/modules/auth.js";
+import { useAuth } from "@/modules/auth.js";
 import { writeCache } from "@/modules/apollo-utils.js";
 
 export default {

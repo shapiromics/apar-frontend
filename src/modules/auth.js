@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import apolloClient from "@/plugins/vue-apollo-client.js";
 import { writeCache } from "@/modules/apollo-utils.js";
 
-export default function useAuth() {
+export function useAuth() {
 
   const state = reactive({
     token: null,

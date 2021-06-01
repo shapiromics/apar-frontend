@@ -1,14 +1,16 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import useAuth from "@/modules/auth.js";
+import { useAuth } from "@/modules/auth.js";
 
 import Home from "../components/Home.vue";
+import BacGWASimAbout from "../components/BacGWASimAbout.vue";
 import JobBacGWASim from "../components/JobBacGWASim.vue";
 import JobHistory from "../components/JobHistory.vue";
 import NotFound from "../components/NotFound.vue";
 import SignIn from "../components/SignIn.vue";
 import SplitStrains from "../components/SplitStrains.vue";
+import SplitStrainsAbout from "../components/SplitStrainsAbout.vue";
 
 Vue.use(Router);
 
@@ -29,7 +31,12 @@ const router = new Router({
       meta: { registered: true },
     },
     {
-      path: "/job/bacgwasim",
+      path: "/bacgwasim/about",
+      name: "BacGWASimAbout",
+      component: BacGWASimAbout,
+    },
+    {
+      path: "/bacgwasim/job",
       name: "JobBacGWASim",
       component: JobBacGWASim,
       meta: { registered: true },
@@ -41,7 +48,12 @@ const router = new Router({
       meta: { guest: true },
     },
     {
-      path: "/job/splitstrains",
+      path: "/splitstrains/about",
+      name: "SplitStrainsAbout",
+      component: SplitStrainsAbout,
+      meta: { registered: true },
+    },    {
+      path: "/splitstrains/job",
       name: "SplitStrains",
       component: SplitStrains,
       meta: { registered: true },
